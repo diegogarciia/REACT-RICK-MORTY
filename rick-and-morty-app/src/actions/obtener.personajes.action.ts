@@ -1,9 +1,15 @@
 import { rickMortyApi } from "../api/rick-morty.api";
 import type { Character } from "../interfaces/rick-morty.interface";
 
-export const obtenerPersonajes = async (): Promise<Character[]> => {
+export const obtenerPersonajes = async (name: string = '', status: string = ''): Promise<Character[]> => {
     
-    const respuesta = await rickMortyApi.get<any>('/character');
+    const respuesta = await rickMortyApi.get<any>('/character', {
+        params: {
+            name,   
+            status  
+        }
+    });
+    
     const listaBasica = respuesta.data.results;
 
     const promesas = listaBasica.map(async (p: any) => {

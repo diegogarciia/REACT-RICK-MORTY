@@ -2,23 +2,21 @@ import { useEffect, useState, useRef } from "react";
 import { obtenerPersonajes } from "../actions/obtener.personajes.action";
 import type { Character } from "../interfaces/rick-morty.interface";
 
-export const useCharacters = () => {
+export const useCharacters = (name: string = '', status: string = '') => {
     const [personajes, setPersonajes] = useState<Character[]>([]);
     const [estaCargando, setEstaCargando] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const totalPeticiones = useRef(0);
-
     const cargarPersonajes = async () => {
         try {
             setEstaCargando(true);
-            const data = await obtenerPersonajes();
-            setPersonajes(data);
+            setError(null); 
             
-            totalPeticiones.current++; 
-            console.log(`Peticiones realizadas: ${totalPeticiones.current}`);
+            const data = await obtenerPersonajes(name, status);
+            setPersonajes(data);
         } catch (e) {
-            setError("Error al cargar personajes");
+            setPersonajes([]); 
+            setError("No se encontraron personajes con esos criterios");
         } finally {
             setEstaCargando(false);
         }
@@ -26,12 +24,7 @@ export const useCharacters = () => {
 
     useEffect(() => {
         cargarPersonajes();
-    }, []);
+    }, [name, status]); 
 
-    return {
-        personajes,
-        estaCargando,
-        error,
-        cargarPersonajes,
-    };
+    return { personajes, estaCargando, error };
 };

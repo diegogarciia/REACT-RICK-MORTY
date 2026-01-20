@@ -1,23 +1,31 @@
+import { useState } from "react";
 import { useCharacters } from "./hooks/useCharacters";
+import { SearchBar } from "./components/SearchBar";
 
 export const RickMortyApp = () => {
-  const { personajes, estaCargando, error } = useCharacters();
+  const [nombreBusqueda, setNombreBusqueda] = useState('');
 
-  if (estaCargando) return <h2>Cargando personajes...</h2>;
-
-  if (error) return <h2>Error: {error}</h2>;
+  const { personajes, estaCargando, error } = useCharacters(nombreBusqueda);
 
   return (
     <>
       <h1>Rick & Morty Lista De Personajes</h1>
-      <ul>
-        {personajes.map((p) => (
-          <li key={p.id}>
-            <img src={p.image} alt={p.name} width="50" />
-            <span>{p.name} - <b>{p.status}</b></span>
-          </li>
-        ))}
-      </ul>
+
+      <SearchBar 
+        placeholder="Busca un personaje..." 
+        onQuery={(valor) => setNombreBusqueda(valor)} 
+      />
+
+      {estaCargando && <p>Cargando...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      {!estaCargando && (
+        <ul>
+          {personajes.map(p => (
+            <li key={p.id}>{p.name}</li>
+          ))}
+        </ul>
+      )}
     </>
   );
 };
