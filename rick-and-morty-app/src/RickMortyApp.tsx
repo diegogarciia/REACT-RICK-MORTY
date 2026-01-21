@@ -3,15 +3,30 @@ import { useCharacters } from "./hooks/useCharacters";
 import { SearchBar } from "./components/SearchBar";
 import { TarjetaPersonaje } from "./components/TarjetaPersonaje";
 import type { Character } from "./interfaces/rick-morty.interface";
+import { PreviousSearches } from "./components/PreviousSearches";
 
 export const RickMortyApp = () => {
   const [nombreBusqueda, setNombreBusqueda] = useState('');
-  
+
   const [estadoBusqueda, setEstadoBusqueda] = useState('');
 
   const [seleccionado, setSeleccionado] = useState<Character | null>(null);
 
   const { personajes, estaCargando, error } = useCharacters(nombreBusqueda, estadoBusqueda);
+
+  const [historial, setHistorial] = useState<string[]>([]);
+
+  const manejarNuevaBusqueda = (nombre: string) => {
+    const nombreLimpio = nombre.toLowerCase().trim();
+    if (nombreLimpio.length === 0) return;
+
+    setNombreBusqueda(nombreLimpio);
+
+    setHistorial(prev => {
+      const nuevo = [nombreLimpio, ...prev.filter(item => item !== nombreLimpio)];
+      return nuevo.slice(0, 5);
+    });
+  };
 
   return (
     <>
@@ -38,7 +53,12 @@ export const RickMortyApp = () => {
 
       <SearchBar 
         placeholder="Busca un personaje..." 
-        onQuery={(valor) => setNombreBusqueda(valor)} 
+        onQuery={manejarNuevaBusqueda} 
+      />
+
+      <PreviousSearches 
+        searches={historial} 
+        onLabelClicked={(valor) => setNombreBusqueda(valor)} 
       />
 
       <div style={{ margin: '20px 0', display: 'flex', gap: '10px' }}>
