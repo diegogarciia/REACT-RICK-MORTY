@@ -1,20 +1,21 @@
 import { rickMortyApi } from "../api/rick-morty.api";
-import type { Character } from "../interfaces/rick-morty.interface";
+import { Pagination } from "../interfaces/rick-morty.interface";
 
-export const obtenerPersonajes = async (name: string = '', status: string = ''): Promise<Character[]> => {
+export const obtenerPersonajes = async (name: string = '', status: string = '', page: number = 1) => {
 
     try {
         
-        const respuesta = await rickMortyApi.get<any>('/character', {
+        const respuesta = await rickMortyApi.get('/character', {
             params: {
                 name,   
-                status  
+                status,
+                page 
             }
         });
         
-        const listaBasica = respuesta.data.results;
+        const { results, info } = respuesta.data;
         
-        const promesas = listaBasica.map(async (p: any) => {
+        const promesas = results.map(async (p: any) => {
             
             const detalleResp = await fetch(p.url); 
             const datos = await detalleResp.json();
@@ -35,10 +36,15 @@ export const obtenerPersonajes = async (name: string = '', status: string = ''):
         };
     });
 
-    return Promise.all(promesas);
+    const personajes = await Promise.all(promesas);
+
+    return {
+      results: personajes,
+      info: info as Pagination
+    };
 
 } catch (error) {
     console.warn("No se encontraron personajes", error);
-    return [];
+    return { results: [], info: null };
 }
 };

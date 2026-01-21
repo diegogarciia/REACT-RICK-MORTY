@@ -7,14 +7,17 @@ import { PreviousSearches } from "./components/PreviousSearches";
 
 export const RickMortyApp = () => {
   const [nombreBusqueda, setNombreBusqueda] = useState('');
-
   const [estadoBusqueda, setEstadoBusqueda] = useState('');
-
   const [seleccionado, setSeleccionado] = useState<Character | null>(null);
-
-  const { personajes, estaCargando, error } = useCharacters(nombreBusqueda, estadoBusqueda);
-
   const [historial, setHistorial] = useState<string[]>([]);
+
+  const { 
+    personajes, 
+    estaCargando, 
+    error, 
+    tieneMas, 
+    cargarSiguientePagina 
+  } = useCharacters(nombreBusqueda, estadoBusqueda);
 
   const manejarNuevaBusqueda = (nombre: string) => {
     const nombreLimpio = nombre.toLowerCase().trim();
@@ -68,22 +71,40 @@ export const RickMortyApp = () => {
         <button onClick={() => setEstadoBusqueda('unknown')} style={{ color: 'gray', fontWeight: estadoBusqueda === 'unknown' ? 'bold' : 'normal' }}>Desconocido</button>
       </div>
 
-      {estaCargando && <p>Cargando...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <div className="personajes-grid"> 
+        {personajes.map((p) => (
+          <div 
+            key={p.id} 
+            onClick={() => setSeleccionado(p)}
+            style={{ cursor: 'pointer' }}
+          >
+            <TarjetaPersonaje character={p} />
+          </div>
+        ))}
+      </div>
 
-      {!estaCargando && !error && (
-        <div className="personajes-grid"> 
-          {personajes.map((p) => (
-            <div 
-              key={p.id} 
-              onClick={() => setSeleccionado(p)}
-              style={{ cursor: 'pointer' }}
-            >
-              <TarjetaPersonaje character={p} />
-            </div>
-          ))}
+      {tieneMas && !error && (
+        <div style={{ display: 'flex', justifyContent: 'center', margin: '40px 0' }}>
+          <button 
+            onClick={cargarSiguientePagina}
+            disabled={estaCargando}
+            style={{
+              padding: '10px 25px',
+              backgroundColor: '#55cc44',
+              color: 'black',
+              fontWeight: 'bold',
+              borderRadius: '5px',
+              cursor: estaCargando ? 'not-allowed' : 'pointer',
+              opacity: estaCargando ? 0.7 : 1
+            }}
+          >
+            {estaCargando ? 'Cargando más...' : 'Cargar más personajes'}
+          </button>
         </div>
       )}
+
+      {estaCargando && personajes.length === 0 && <p>Cargando lista...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </>
   );
 };
