@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useCharacters } from "./hooks/useCharacters";
 import { SearchBar } from "./components/SearchBar";
+import { TarjetaPersonaje } from "./components/TarjetaPersonaje";
 
 export const RickMortyApp = () => {
   const [nombreBusqueda, setNombreBusqueda] = useState('');
@@ -49,14 +50,15 @@ export const RickMortyApp = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       {!estaCargando && !error && (
-        <ul>
-          {personajes.map(p => (
-            <li key={p.id}>
-              {p.name} - <b>{p.status}</b>
-            </li>
+        <div className="personajes-grid"> 
+        {personajes.map((p) => (
+          <TarjetaPersonaje 
+          key={p.id} 
+          character={p} 
+          />
           ))}
-        </ul>
-      )}
+          </div>
+        )}
     </>
   );
 };
