@@ -74,7 +74,7 @@ h1 {
 }
 
 .botones-estado button#boton-estado-desconocido {
-  color: gray;
+  color: #9e9e9e;
 }
 
 .cargar-mas-div {
