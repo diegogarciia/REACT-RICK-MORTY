@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { obtenerPersonajes } from "../actions/obtener.personajes.action";
 import type { Character } from "../interfaces/rick-morty.interface";
+import { Pagination } from "../interfaces/rick-morty.interface";
 
 export const useCharacters = (name: string = '', status: string = '') => {
     const [personajes, setPersonajes] = useState<Character[]>([]);
