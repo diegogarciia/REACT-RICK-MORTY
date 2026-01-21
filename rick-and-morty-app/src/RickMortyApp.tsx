@@ -36,19 +36,10 @@ export const RickMortyApp = () => {
       <h1>Rick & Morty Lista De Personajes</h1>
 
       {seleccionado && (
-        <div style={{ 
-          border: '2px solid #55cc44', 
-          borderRadius: '10px', 
-          padding: '20px', 
-          marginBottom: '30px',
-          backgroundColor: '#242424' 
-        }}>
+        <div className="detalle-personaje">
           <h2>Detalle del Personaje Seleccionado</h2>
           <TarjetaPersonaje character={seleccionado} esDetalle={true} />
-          <button 
-            onClick={() => setSeleccionado(null)}
-            style={{ marginTop: '10px' }}
-          >
+          <button onClick={() => setSeleccionado(null)}>
             Cerrar Detalle
           </button>
         </div>
@@ -64,11 +55,11 @@ export const RickMortyApp = () => {
         onLabelClicked={(valor) => setNombreBusqueda(valor)} 
       />
 
-      <div style={{ margin: '20px 0', display: 'flex', gap: '10px' }}>
-        <button onClick={() => setEstadoBusqueda('')} style={{ fontWeight: estadoBusqueda === '' ? 'bold' : 'normal' }}>Todos</button>
-        <button onClick={() => setEstadoBusqueda('alive')} style={{ color: 'green', fontWeight: estadoBusqueda === 'alive' ? 'bold' : 'normal' }}>Vivos</button>
-        <button onClick={() => setEstadoBusqueda('dead')} style={{ color: 'red', fontWeight: estadoBusqueda === 'dead' ? 'bold' : 'normal' }}>Muertos</button>
-        <button onClick={() => setEstadoBusqueda('unknown')} style={{ color: 'gray', fontWeight: estadoBusqueda === 'unknown' ? 'bold' : 'normal' }}>Desconocido</button>
+      <div className="botones-estado">
+        <button id="boton-estado-todos" onClick={() => setEstadoBusqueda('')}>Todos</button>
+        <button id="boton-estado-vivos" onClick={() => setEstadoBusqueda('alive')}>Vivos</button>
+        <button id="boton-estado-muertos" onClick={() => setEstadoBusqueda('dead')}>Muertos</button>
+        <button id="boton-estado-desconocido" onClick={() => setEstadoBusqueda('unknown')}>Desconocido</button>
       </div>
 
       <div className="personajes-grid"> 
@@ -84,19 +75,10 @@ export const RickMortyApp = () => {
       </div>
 
       {tieneMas && !error && (
-        <div style={{ display: 'flex', justifyContent: 'center', margin: '40px 0' }}>
+        <div className="cargar-mas-div">
           <button 
             onClick={cargarSiguientePagina}
             disabled={estaCargando}
-            style={{
-              padding: '10px 25px',
-              backgroundColor: '#55cc44',
-              color: 'black',
-              fontWeight: 'bold',
-              borderRadius: '5px',
-              cursor: estaCargando ? 'not-allowed' : 'pointer',
-              opacity: estaCargando ? 0.7 : 1
-            }}
           >
             {estaCargando ? 'Cargando más...' : 'Cargar más personajes'}
           </button>
@@ -104,7 +86,6 @@ export const RickMortyApp = () => {
       )}
 
       {estaCargando && personajes.length === 0 && <p>Cargando lista...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
     </>
   );
 };
