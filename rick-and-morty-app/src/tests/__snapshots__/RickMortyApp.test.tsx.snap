@@ -1,0 +1,90 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Pruebas en <RickMortyApp /> > debe de hacer match con el snapshot 1`] = `
+<div>
+  <h1>
+    Rick & Morty Lista De Personajes
+  </h1>
+  <div
+    class="search-container"
+  >
+    <input
+      placeholder="Busca un personaje..."
+      type="text"
+      value=""
+    />
+    <button>
+      Buscar
+    </button>
+  </div>
+  <div
+    class="previous-searches"
+  >
+    <h2>
+      Búsquedas Previas
+    </h2>
+    <ul
+      class="previous-searches-list"
+    />
+  </div>
+  <div
+    class="botones-estado"
+  >
+    <button
+      id="boton-estado-todos"
+    >
+      Todos
+    </button>
+    <button
+      id="boton-estado-vivos"
+    >
+      Vivos
+    </button>
+    <button
+      id="boton-estado-muertos"
+    >
+      Muertos
+    </button>
+    <button
+      id="boton-estado-desconocido"
+    >
+      Desconocido
+    </button>
+  </div>
+  <div
+    class="personajes-grid"
+  >
+    <div
+      style="cursor: pointer;"
+    >
+      <div
+        class="personaje-carta"
+      >
+        <img
+          alt="Rick"
+        />
+        <h3>
+          #
+          1
+           - 
+          Rick
+        </h3>
+        <div
+          class="info-container"
+        >
+          <p>
+            <strong>
+              Estado:
+            </strong>
+            <span
+              style="color: rgb(85, 204, 68); font-weight: bold; margin-left: 5px;"
+            >
+              Alive
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

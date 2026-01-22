@@ -1,0 +1,23 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Pruebas en <PreviousSearches /> > debe de hacer match con el snapshot 1`] = `
+<div>
+  <div
+    class="previous-searches"
+  >
+    <h2>
+      Búsquedas Previas
+    </h2>
+    <ul
+      class="previous-searches-list"
+    >
+      <li>
+        Rick
+      </li>
+      <li>
+        Morty
+      </li>
+    </ul>
+  </div>
+</div>
+`;
