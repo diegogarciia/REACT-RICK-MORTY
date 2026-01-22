@@ -55,6 +55,7 @@ h1 {
   cursor: pointer;
   transition: 0.3s;
   border: #55cc44 1px solid;
+  flex-wrap: wrap;
 }
 
 .botones-estado button:hover {
@@ -91,4 +92,18 @@ h1 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px; 
+  }
+
+  h1 {
+    font-size: 1.5rem; 
+  }
+
+  .cargar-mas-div {
+    margin: 20px; 
+  }
 }
